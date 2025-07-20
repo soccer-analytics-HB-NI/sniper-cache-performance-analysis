@@ -1,0 +1,23 @@
+name: 🚀 Cache Performance Analysis
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test Workflow
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Test Basic Functionality
+      run: |
+        echo "✅ Workflow is working!"
+        echo "📁 Repository contents:"
+        ls -la
+        echo "📂 Project structure:"
+        find . -type f -name "*.c" -o -name "*.cfg" -o -name "*.sh" | head -10
