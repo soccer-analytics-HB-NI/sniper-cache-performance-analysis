@@ -1,0 +1,37 @@
+name: Cache Performance Analysis
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential python3-pip
+        pip3 install matplotlib pandas numpy
+    
+    - name: Build Workloads
+      run: |
+        chmod +x scripts/build_workloads.sh
+        ./scripts/build_workloads.sh
+    
+    - name: Run Native Tests
+      run: |
+        ./bin/sequential_access
+        ./bin/random_access
+        ./bin/mixed_access
+    
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: workload-binaries
+        path: bin/
