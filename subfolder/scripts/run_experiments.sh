@@ -1,26 +1,18 @@
 #!/bin/bash
 
+echo "Running cache performance experiments..."
+
 # Create results directory
 mkdir -p results
 
-echo "Running cache performance experiments..."
+echo "Running native performance tests..."
+echo "=== Sequential Access ==="
+./bin/sequential_access
 
-# Run experiments with different configurations
-WORKLOADS=("sequential_access" "random_access" "mixed_access")
-CONFIGS=("cache_l1_32k" "cache_l1_16k")
+echo "=== Random Access ==="
+./bin/random_access
 
-for config in "${CONFIGS[@]}"; do
-    for workload in "${WORKLOADS[@]}"; do
-        echo "Running $workload with $config configuration..."
-        
-        # Run simulation
-        $SNIPER_ROOT/run-sniper \
-            --cfg $config \
-            --stats-output "results/${workload}_${config}" \
-            -- bin/$workload
-            
-        echo "Completed $workload with $config"
-    done
-done
+echo "=== Mixed Access ==="
+./bin/mixed_access
 
-echo "All experiments completed!"
+echo "✅ All experiments completed!"
