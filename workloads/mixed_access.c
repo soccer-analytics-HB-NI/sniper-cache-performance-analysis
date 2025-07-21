@@ -18,7 +18,7 @@ int main() {
     
     clock_t start = clock();
     
-    // Mixed access pattern (70% sequential, 30% random) 
+    // Mixed access pattern (70% sequential, 30% random)  
     for (int iter = 0; iter < ITERATIONS; iter++) {
         for (int i = 0; i < ARRAY_SIZE; i++) {
             if ((double)rand() / RAND_MAX < SEQUENTIAL_RATIO) {
